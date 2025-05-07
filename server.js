@@ -1,17 +1,13 @@
 import express from "express";
-import { startups} from './datas/data.js';
-import { filterData } from './utils/filterData.js';
+import routes from './routers/routes.js';
 
 const app = express();
 const PORT = 8000;
 
+app.use('/api', routes);
 
-app.get('/api', (req, res) => {
-    let filteredData = startups;
-
-    filteredData = filterData(filteredData, req.query)
-
-    res.json(filteredData);
+app.use( (req, res) => {
+    res.status(400).json({ message: "endpoint not found"})
 })
 
 app.listen(PORT, () => {
